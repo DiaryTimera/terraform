@@ -1,8 +1,10 @@
-# Exemple si tu veux rendre le nom des images ou des ports dynamiques
-variable "backend_image" {
-  default = "diarytimera/app-docker-backend:latest"
-}
+# Pour l’instant pas nécessaire, mais tu peux y définir :
+# - driver Minikube
+# - nom du cluster
+# - configuration kubeconfig path
+# Exemple :
 
-variable "frontend_image" {
-  default = "diarytimera/app-docker-frontend:latest"
+variable "minikube_driver" {
+  description = "Driver utilisé par Minikube"
+  default     = "virtualbox"
 }
