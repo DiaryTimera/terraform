@@ -14,7 +14,7 @@ pipeline {
         stage('Cloner le dépôt') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/DiaryTimera/terraform.git'
+                    url: 'https://github.com/DiaryTimera/fil_rouge_jenkins.git'
             }
         }
 
