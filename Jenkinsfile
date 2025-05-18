@@ -14,7 +14,7 @@ pipeline {
         stage('Cloner le dépôt') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/DiaryTimera/fil_rouge_jenkins.git'
+                    url: 'https://github.com/DiaryTimera/terraform.git'
             }
         }
 
@@ -29,9 +29,8 @@ pipeline {
         stage("Sonarqube analysis for Backend") {
             steps {
                 dir("Backend-main/odc") {
-                    echo "Analyse SonarQube du backend..."
                     withSonarQubeEnv("SonarQube") {
-                        bat "${tool "SonarScanner"}/bin/sonar-scanner -Dsonar.token=$SONARQUBE_TOKEN -Dsonar.host.url=$SONARQUBE_URL"
+                        bat "${tool 'SonarScanner'}/bin/sonar-scanner -Dsonar.token=$SONARQUBE_TOKEN -Dsonar.host.url=$SONARQUBE_URL"
                     }
                 }
             }
@@ -40,9 +39,8 @@ pipeline {
         stage("Sonarqube analysis for Frontend") {
             steps {
                 dir("Frontend-main") {
-                    echo "Analyse SonarQube du Frontend..."
                     withSonarQubeEnv("SonarQube") {
-                        bat "${tool "SonarScanner"}/bin/sonar-scanner -Dsonar.token=$SONARQUBE_TOKEN -Dsonar.host.url=$SONARQUBE_URL"
+                        bat "${tool 'SonarScanner'}/bin/sonar-scanner -Dsonar.token=$SONARQUBE_TOKEN -Dsonar.host.url=$SONARQUBE_URL"
                     }
                 }
             }
@@ -70,13 +68,13 @@ pipeline {
         stage('Déploiement local avec Docker Compose') {
             steps {
                 bat '''
-                   docker stop backend_app || exit 0
-                   docker rm backend_app || exit 0
-                   docker stop frontend_app || exit 0
-                   docker rm frontend_app || exit 0
-                   docker-compose down || exit 0
-                   docker-compose pull
-                   docker-compose up -d --build
+                    docker stop backend_app || exit 0
+                    docker rm backend_app || exit 0
+                    docker stop frontend_app || exit 0
+                    docker rm frontend_app || exit 0
+                    docker-compose down || exit 0
+                    docker-compose pull
+                    docker-compose up -d --build
                 '''
             }
         }
